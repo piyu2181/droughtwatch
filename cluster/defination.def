@@ -1,0 +1,66 @@
+BootStrap: docker
+From: ubuntu:18.04
+
+
+################# Section: Defining the system #################################
+# Commands in the %post section are executed within the container.
+%post
+   export CUDA_VISIBLE_DEVICES=' '
+   echo "------------------------------------------------------"
+   echo "Installing Python 3.6"
+   apt -y update
+   apt -y install python3-pip
+   echo "------------------------------------------------------"
+   apt-get -y update
+   apt-get install -y build-essential
+   apt -y install software-properties-common
+   apt -y update
+   add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+   apt -y update
+   echo "------------------------------------------------------"
+   echo "Installing PyTorch 0.4.0"
+   echo "------------------------------------------------------"
+
+   echo ${CUDA_VISIBLE_DEVICES}
+   pip3 install http://download.pytorch.org/whl/cu90/torch-0.4.0-cp36-cp36m-linux_x86_64.whl
+   echo "------------------------------------------------------"
+   echo "Installing Tools with apt-get"
+   echo "------------------------------------------------------"
+   apt-get install -y cmake libcupti-dev libyaml-dev wget unzip
+   apt-get clean
+   apt -y install python3-pip
+   apt -y install build-essential libssl-dev libffi-dev python3-dev
+   apt-get -y install libsm6 libxrender1 libfontconfig1
+   apt-get -y install libgtk2.0-dev
+   apt-get install -y python3.6 python3.6-dev python3-virtualenv virtualenv git gcc wget bzip2 python3-pip
+   apt -y install gdal-bin libgdal-dev
+   echo "------------------------------------------------------"
+   echo "Installing things with pip"
+   echo "------------------------------------------------------"
+   pip3 install --global-option=build_ext --global-option="-I/usr/include/gdal" GDAL==`gdal-config --version`
+   pip3 install glob3
+   pip3 install numpy opencv-python retrying requests scipy 
+   pip3 install --no-cache-dir torch torchvision matplotlib ipython torchsummary
+   pip3 install shapely geojson geojson_utils comet_ml tiffile imutils gpustat pandas pyarrow scikit-learn tqdm pillow
+   pip3 install pandas comet_ml scipy tqdm sklearn scikit-image
+   pip3 install numpy pandas comet_ml Pillow scipy opencv-python  sklearn
+   pip3 install jupyter
+   pip3 install ipykernel 
+   pip3 install Pillow
+   pip3 install jupyter_contrib_nbextensions
+   pip3 install pretrainedmodels
+   pip3 install fastai
+   echo "------------------------------------------------------"
+   echo "Creating mount points"
+   echo "------------------------------------------------------"
+   mkdir /dataset
+   mkdir /tmp_log
+   mkdir /final_log
+
+  
+    
+    
+    
+    
+    
+  
